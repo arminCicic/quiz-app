@@ -1,0 +1,20 @@
+{
+  "quizzes": [
+    {
+      "id": 1,
+      "quizName": "Quiz 1"
+    },
+    {
+      "id": 2,
+      "quizName": "Quiz 2"
+    },
+    {
+      "id": 3,
+      "quizName": "dsadsadad"
+    },
+    {
+      "id": 4,
+      "quizName": "armin"
+    }
+  ]
+}
