@@ -1,10 +1,14 @@
 import { Component, Inject, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { QuizService } from 'src/app/services/quiz.service';
 import { AddQuizComponent } from '../add-quiz/add-quiz.component';
 import { MatDialog } from '@angular/material/dialog';
+import { CoreService } from '../../core/core.service';
+
 
 
 
@@ -31,11 +35,12 @@ export class HomeComponent {
    
 
     constructor (private quizService: QuizService,
-                  private dialog: MatDialog,                
+                  private dialog: MatDialog,  
+                  private coreService: CoreService,
+                  private router: Router                            
                 
                 
-      ) {      
-      }
+      ) {}
 
       ngOnInit(): void {
         this.getQuizList()
@@ -65,37 +70,40 @@ export class HomeComponent {
   }
 
   deleteQuiz(id:number) {
-    // this.empService.deleteEmployeeList(id).subscribe({
-    //   next: (res) => {
-    //    this.coreService.openSnackBar("Employee deleted", "done")
-    //     this.getEmployeeList();
-    //   },
-    //   error: (err) => {
-    //     console.log(err)
-    //   } 
-    // })
-    console.log("employee deleted")
+    this.quizService.deleteQuiz(id).subscribe({
+      next: (res) => {
+       this.coreService.openSnackBar("Employee deleted", "done")
+        this.getQuizList();
+      },
+      error: (err) => {
+        console.log(err)
+      } 
+    })
+    
    }
   
    openEditForm(data:any, id:any, event:Event) {
-  //  const dialogRef = this.dialog.open(AddEditComponent, {
-  //     id: id,
-  //     data: data,
-  
-  //   });
-  //   dialogRef.afterClosed().subscribe({
-  //     next: (val) => {
-  //       if (val) {
-  //         this.getEmployeeList();
-  //       }
-  //     }
-  //   })
 
-  const isActionColumnButton = (event.target as HTMLElement).closest('.action-btn') !== null;
-  if (!isActionColumnButton) {
-    event.stopPropagation()
-    console.log("Ready for Edit")
-  }
+    const isActionColumnButton = (event.target as HTMLElement).closest('.action-btn') !== null;
+  if (isActionColumnButton) {
+    event.stopPropagation()    
+  } else {
+    const dialogRef = this.dialog.open(AddQuizComponent, {
+      id: id,
+      data: data,
+  
+    });
+    dialogRef.afterClosed().subscribe({
+      next: (val) => {
+        if (val) {
+          this.getQuizList();
+        }
+      }
+    })
+
+  }  
+
+  
   }
 
   openAddQuizForm() {

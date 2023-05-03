@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,10 +23,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AddQuizComponent } from './home/add-quiz/add-quiz.component';
+import {MatCardModule} from '@angular/material/card';
+import { QuizComponent } from './home/quiz/quiz.component';
+
 
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
+  { path: 'quiz', component: QuizComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }
 ]
@@ -38,9 +41,12 @@ const appRoutes: Routes = [
     HomeComponent,
     NavbarComponent,
     AddQuizComponent,
+    QuizComponent,
+   
     
   ],
   imports: [
+    RouterModule.forRoot(appRoutes),
     BrowserModule,
     AppRoutingModule,
     MatToolbarModule,
@@ -60,7 +66,8 @@ const appRoutes: Routes = [
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

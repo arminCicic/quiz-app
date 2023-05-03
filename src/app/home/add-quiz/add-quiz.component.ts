@@ -18,14 +18,6 @@ export class AddQuizComponent implements OnInit {
   
  
 
-  education: string[] = [
-    'Matric',
-    'Diploma',
-    'Intermediate',
-    'Graduate',
-    'Post Graduate'
-  ];
-
   constructor (private quizService: QuizService,
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<AddQuizComponent>,
@@ -45,7 +37,23 @@ ngOnInit(): void {
 }
 
 onFormSubmit () {
-    if (this.form.valid) {
+  if (this.form.valid) {
+    if (this.data) {
+    
+      this.quizService.updateQuiz(this.form.value).subscribe({
+       
+        next: (val:any) => {
+          this.coreService.openSnackBar("Quiz information updated")
+          this.dialogRef.close(true);
+                  
+        }, 
+        error: (err:any) => {
+          console.error(err)
+        
+        }
+
+      })
+    } else {
       this.quizService.addQuiz(this.form.value).subscribe({
         next: (val:any) => {
           this.coreService.openSnackBar("Quiz added")
@@ -55,8 +63,14 @@ onFormSubmit () {
         error: (err:any) => {
           console.error(err)
         }
-      })  
-     }
+
+      })
+    }
+  }
+}
 }
 
-}
+
+
+
+

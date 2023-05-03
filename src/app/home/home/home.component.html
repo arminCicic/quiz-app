@@ -26,10 +26,10 @@
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
           <td mat-cell *matCellDef="let row">
-            <button mat-icon-button color="primary" class="action-btn">
+            <button mat-icon-button color="primary" class="action-btn" routerLink="/quiz">
               <mat-icon class="mat-icon-lg">open_in_new</mat-icon>
             </button>
-            <button mat-icon-button color="warn" class="action-btn">
+            <button mat-icon-button color="warn" class="action-btn" (click)="deleteQuiz(row.id)">
               <mat-icon>delete</mat-icon>
             </button>
           </td>
