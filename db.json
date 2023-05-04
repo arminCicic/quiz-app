@@ -2,11 +2,35 @@
   "quizzes": [
     {
       "id": 1,
-      "quizName": "Quiz 1"
+      "quizName": "sdsadads",
+      "questions": [
+        {
+          "id":1,
+          "question": "pitanje",
+          "answer":"odgovor"
+        }
+      ]
     },
     {
       "id": 2,
-      "quizName": "sdasdsadsdda"
+      "quizName": "dfdsffdfs"
+    }
+  ],
+  "allQuestions": [
+    {
+      "id": 1,
+      "questionTxt": "kdsodksokdsokdosakdoskdoako",
+      "questionAnswer": "kdsodksokdsokdosakdoskdoako"
+    },
+    {
+      "id": 2,
+      "quizQuestion": "armin",
+      "quizAnswer": "dksadkaosdkasokdoas"
+    },
+    {
+      "id": 3,
+      "quizQuestion": "gggggggggggggg",
+      "quizAnswer": "fdasdasdasdad"
     }
   ]
 }

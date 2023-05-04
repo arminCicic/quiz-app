@@ -7,27 +7,30 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CoreService } from '../../core/core.service';
 
 @Component({
-  selector: 'app-add-quiz',
-  templateUrl: './add-quiz.component.html',
-  styleUrls: ['./add-quiz.component.scss']
+  selector: 'app-add-questions',
+  templateUrl: './add-questions.component.html',
+  styleUrls: ['./add-questions.component.scss']
 })
-export class AddQuizComponent implements OnInit {
+export class AddQuestionsComponent implements OnInit {
 
   form: FormGroup;
+
+  newQuestion: any
 
   
  
 
   constructor (private quizService: QuizService,
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<AddQuizComponent>,
+    private dialogRef: MatDialogRef<AddQuestionsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private coreService: CoreService
 ) {
 this.form = this.fb.group (
 {
 id: new FormControl(''),
-quizName: new FormControl('', [Validators.required]),
+quizQuestion: new FormControl('', [Validators.required]),
+quizAnswer: new FormControl('', [Validators.required]),
 }
 )
 }
@@ -45,6 +48,8 @@ onFormSubmit () {
         next: (val:any) => {
           this.coreService.openSnackBar("Quiz information updated")
           this.dialogRef.close(true);
+
+          
                   
         }, 
         error: (err:any) => {
@@ -54,23 +59,33 @@ onFormSubmit () {
 
       })
     } else {
-      this.quizService.addQuiz(this.form.value).subscribe({
+      // this.quizService.addNewQuestion(this.form.value).subscribe({
+      //   next: (val:any) => {
+      //     this.coreService.openSnackBar("Question added")
+      //     this.dialogRef.close(true);
+      //     console.log(this.form.value)
+      //   }, 
+      //   error: (err:any) => {
+      //     console.error(err)
+      //   }
+
+      // })
+
+      this.quizService.getSingleQuestion(1,1).subscribe({
         next: (val:any) => {
-          this.coreService.openSnackBar("Quiz added")
+          this.coreService.openSnackBar("Question fetched")
           this.dialogRef.close(true);
-          console.log(this.form.value)
+          console.log(val)
+        
         }, 
         error: (err:any) => {
           console.error(err)
         }
 
       })
+    
     }
   }
 }
+
 }
-
-
-
-
-

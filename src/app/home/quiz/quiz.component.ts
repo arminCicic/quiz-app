@@ -1,7 +1,16 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import SwiperCore, {Autoplay, Pagination, Navigation } from "swiper";
 import Swiper from "swiper";
 SwiperCore.use([Autoplay, Pagination, Navigation]);
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { QuizService } from 'src/app/services/quiz.service';
+import { AddQuizComponent } from '../add-quiz/add-quiz.component';
+import { MatDialog } from '@angular/material/dialog';
+import { CoreService } from '../../core/core.service';
+import { AddQuestionsComponent } from '../add-questions/add-questions.component';
+
 
 
 
@@ -12,6 +21,16 @@ SwiperCore.use([Autoplay, Pagination, Navigation]);
   encapsulation: ViewEncapsulation.None,
 })
 export class QuizComponent {
+
+
+  constructor (
+    // private quizService: QuizService,
+    private dialog: MatDialog,  
+    // private coreService: CoreService,
+    // private router: Router                            
+  
+  
+) {}
 
   questions = [
     {
@@ -24,6 +43,14 @@ export class QuizComponent {
     },
     {
       name: "Question 3",
+      answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac ante justo. Vestibulum tincidunt dolor vitae magna cursus, vel dignissim mauris tristique."
+    },
+    {
+      name: "Question 4",
+      answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac ante justo. Vestibulum tincidunt dolor vitae magna cursus, vel dignissim mauris tristique."
+    },
+    {
+      name: "Question 5",
       answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac ante justo. Vestibulum tincidunt dolor vitae magna cursus, vel dignissim mauris tristique."
     }
   ];
@@ -62,5 +89,15 @@ export class QuizComponent {
   }
 
 
+  openAddQuestionsForm() {
+    const dialogRef = this.dialog.open(AddQuestionsComponent);
+    dialogRef.afterClosed().subscribe({
+      next: (val: any) => {
+        if (val) {
+         console.log("added question")
+        }
+      }
+    })
+  }
 
 }

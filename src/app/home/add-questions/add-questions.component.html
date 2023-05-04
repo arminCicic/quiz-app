@@ -1,0 +1,27 @@
+<div mat-dialog-title>
+    <h1>Add New Question</h1>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+ 
+<div mat-dialog-content class="content">
+ 
+    <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Question</mat-label>
+          <input matInput type="text" placeholder="Question" formControlName="quizQuestion">               
+        </mat-form-field>  
+        <mat-form-field appearance="outline">
+            <mat-label>Answer</mat-label>
+            <input matInput type="text" placeholder="Answer" formControlName="quizAnswer">               
+          </mat-form-field>            
+    </div>   
+      
+</div>
+
+<div mat-dialog-actions class="action">
+    <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+    <button mat-raised-button color="primary" type="submit">Add</button>
+</div>
+
+</form>
