@@ -26,6 +26,11 @@ import { AddQuizComponent } from './home/add-quiz/add-quiz.component';
 import {MatCardModule} from '@angular/material/card';
 import { QuizComponent } from './home/quiz/quiz.component';
 
+import { SwiperModule } from 'swiper/angular';
+
+
+
+
 
 
 const appRoutes: Routes = [
@@ -42,6 +47,7 @@ const appRoutes: Routes = [
     NavbarComponent,
     AddQuizComponent,
     QuizComponent,
+  
    
     
   ],
@@ -67,7 +73,9 @@ const appRoutes: Routes = [
     MatPaginatorModule,
     MatSortModule,
     MatSnackBarModule,
-    MatCardModule
+    MatCardModule,
+    SwiperModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
