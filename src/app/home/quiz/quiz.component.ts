@@ -31,8 +31,7 @@ export class QuizComponent implements OnInit, AfterViewInit {
     private quizService: QuizService,
     private route: ActivatedRoute,
     private dialog: MatDialog,  
-    // private coreService: CoreService,
-    // private router: Router                          
+                       
   
   
 ) {}
@@ -72,7 +71,11 @@ export class QuizComponent implements OnInit, AfterViewInit {
 
 
   openAddQuestionsForm() {
-    const dialogRef = this.dialog.open(AddQuestionsComponent);
+    const dialogRef = this.dialog.open(AddQuestionsComponent, {
+      data: {
+        quizId: this.quizId
+      }
+    });
     dialogRef.afterClosed().subscribe({
       next: (val: any) => {
         if (val) {
@@ -81,6 +84,8 @@ export class QuizComponent implements OnInit, AfterViewInit {
       }
     })
   }
+  
+
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -94,7 +99,7 @@ export class QuizComponent implements OnInit, AfterViewInit {
   getQuizQuestions() {
     this.quizService.getQuizQuestions(this.quizId).subscribe((questions: any[]) => {
       this.questions = questions;
-      console.log(questions)
+     
     });
 
     

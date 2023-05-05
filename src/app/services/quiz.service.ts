@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, map, forkJoin, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class QuizService {
 
  public updateQuiz(data: any): Observable<any> {
   const id = data.id; 
-  return this._http.put(`http://localhost:3000/quizzes/${id}`, data);    
+   return this._http.put(`http://localhost:3000/quizzes/${id}`, data);    
   }
 
   public getQuizList(): Observable<any> {
@@ -26,9 +26,17 @@ public  deleteQuiz(id: number): Observable<any> {
     return this._http.delete(`http://localhost:3000/quizzes/${id}`)
   }
 
-  public addNewQuestion(data: any): Observable<any> {
-    return this._http.post("http://localhost:3000/allQuestions", data)
+  public addNewQuestion(quizId:number, data: any): Observable<any> {
+    console.log(quizId, data)
+    // const id = data.quizId;
+    return this._http.post(`http://localhost:3000/quizzes/${quizId}/questions`, data);
   }
+
+ 
+  
+  
+  
+  
 
   public getSingleQuestion(id: number, questionId: number): Observable<any> {
     return this._http.get(`http://localhost:3000/quizzes/${id}`).pipe(

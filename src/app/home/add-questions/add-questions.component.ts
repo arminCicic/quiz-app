@@ -16,6 +16,7 @@ export class AddQuestionsComponent implements OnInit {
   form: FormGroup;
 
   newQuestion: any
+  quizId: any;
 
   
  
@@ -28,64 +29,78 @@ export class AddQuestionsComponent implements OnInit {
 ) {
 this.form = this.fb.group (
 {
-id: new FormControl(''),
+id: new FormControl(this.data.quizId),
 quizQuestion: new FormControl('', [Validators.required]),
 quizAnswer: new FormControl('', [Validators.required]),
+answerVisible: false
 }
 )
+this.quizId = this.data.quizId;
 }
 
 ngOnInit(): void {
  this.form.patchValue(this.data)
+ 
 }
 
 onFormSubmit () {
-  if (this.form.valid) {
-    if (this.data) {
+
+
+
+  // if (this.form.valid) {
+  //   if (this.data) {
     
-      this.quizService.updateQuiz(this.form.value).subscribe({
+  //     this.quizService.updateQuiz(this.form.value).subscribe({
        
-        next: (val:any) => {
-          this.coreService.openSnackBar("Quiz information updated")
-          this.dialogRef.close(true);
+  //       next: (val:any) => {
+  //         this.coreService.openSnackBar("Quiz information updated")
+  //         this.dialogRef.close(true);
 
           
                   
+  //       }, 
+  //       error: (err:any) => {
+  //         console.error(err)
+        
+  //       }
+
+  //     })
+  //   } else {
+      // ovde treba pristupiti ID trenutnog quiz-a, koji ima u quiz komponenti
+      // navodno koristim pogresan ID. Trebam prvo getati quizzes list ovde pa modifikovati funkciju
+      this.quizService.addNewQuestion(this.quizId, this.form.value).subscribe({        
+
+        next: (val:any) => {
+          this.coreService.openSnackBar("Question added")
+          this.dialogRef.close(true);
+          console.log(this.form.value)
         }, 
         error: (err:any) => {
           console.error(err)
-        
         }
 
       })
-    } else {
-      // this.quizService.addNewQuestion(this.form.value).subscribe({
+
+      
+
+   
+
+      // this.quizService.getSingleQuestion(1,1).subscribe({
       //   next: (val:any) => {
-      //     this.coreService.openSnackBar("Question added")
+      //     this.coreService.openSnackBar("Question fetched")
       //     this.dialogRef.close(true);
-      //     console.log(this.form.value)
+      //     console.log(val)
+        
       //   }, 
       //   error: (err:any) => {
       //     console.error(err)
       //   }
 
       // })
-
-      this.quizService.getSingleQuestion(1,1).subscribe({
-        next: (val:any) => {
-          this.coreService.openSnackBar("Question fetched")
-          this.dialogRef.close(true);
-          console.log(val)
-        
-        }, 
-        error: (err:any) => {
-          console.error(err)
-        }
-
-      })
     
-    }
-  }
+  //   }
+  // }
 }
 
 }
+

@@ -28,6 +28,7 @@ this.form = this.fb.group (
 {
 id: new FormControl(''),
 quizName: new FormControl('', [Validators.required]),
+questions: this.fb.array([])
 }
 )
 }

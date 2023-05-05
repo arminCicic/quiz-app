@@ -5,6 +5,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providedIn: 'root'
 })
 export class CoreService {
+  showSnackbar(arg0: string, arg1: string) {
+    throw new Error('Method not implemented.');
+  }
 
   constructor(private _snackBar: MatSnackBar) { }
 

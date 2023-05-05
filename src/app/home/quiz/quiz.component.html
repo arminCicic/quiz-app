@@ -42,13 +42,14 @@
   <mat-card-title>{{question.question}}</mat-card-title>
 </div> -->
 
+<div class="title">Quiz {{quizId}}</div>
 <div class="slideshow-container">
   <div *ngFor="let question of questions; let i = index" class="slide" [class.active]="i === currentIndex">
     <mat-card class="single-card">
       <mat-card-header>
-          <mat-card-title>{{question.question}}</mat-card-title>
+          <mat-card-title>{{question.quizQuestion}}</mat-card-title>
       </mat-card-header>
-      <mat-card-content *ngIf="question.answerVisible">{{question.answer}}</mat-card-content>
+      <mat-card-content *ngIf="question.answerVisible">{{question.quizAnswer}}</mat-card-content>
       <mat-card-actions>
           <button mat-button (click)="showAnswer(question)">{{!question.answerVisible ? 'SHOW ANSWER' : 'HIDE ANSWER'}}</button>
       </mat-card-actions>
@@ -57,4 +58,10 @@
 
   <a class="prev" (click)="prevSlide()">&#10094;</a>
   <a class="next" (click)="nextSlide()">&#10095;</a>
+</div>
+
+<div class="add-btn">
+  <button mat-raised-button color="primary" (click)="openAddQuestionsForm()">
+    ADD QUESTIONS
+  </button>
 </div>
