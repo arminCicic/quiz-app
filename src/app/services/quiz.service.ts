@@ -41,5 +41,14 @@ public  deleteQuiz(id: number): Observable<any> {
       })
     );
   }
+
+  public getQuizQuestions(id: number): Observable<any> {
+    return this._http.get(`http://localhost:3000/quizzes/${id}`).pipe(
+      map((quiz: any) => {
+        return quiz.questions;
+      })
+    );
+  }
+  
   
 }

@@ -1,5 +1,5 @@
 import { Component, Inject, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -116,6 +116,13 @@ export class HomeComponent {
       }
     })
   }
+
+  openQuiz(id: number) {
+    this.router.navigate(['/quiz', id]);
+  }
+  
+  
+  
 
   
 

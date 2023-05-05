@@ -1,15 +1,11 @@
-import { Component, Inject, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import SwiperCore, {Autoplay, Pagination, Navigation } from "swiper";
-import Swiper from "swiper";
 SwiperCore.use([Autoplay, Pagination, Navigation]);
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { QuizService } from 'src/app/services/quiz.service';
-import { AddQuizComponent } from '../add-quiz/add-quiz.component';
 import { MatDialog } from '@angular/material/dialog';
-import { CoreService } from '../../core/core.service';
 import { AddQuestionsComponent } from '../add-questions/add-questions.component';
+import { ActivatedRoute } from '@angular/router';
+
 
 
 
@@ -20,73 +16,59 @@ import { AddQuestionsComponent } from '../add-questions/add-questions.component'
   styleUrls: ['./quiz.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class QuizComponent {
+export class QuizComponent implements OnInit, AfterViewInit {  
+
+  
+  answerVisible: boolean[] = [];
+  quizId!: number;
+  questions: any[] = [];
+
+  currentIndex = 0;
+  
 
 
   constructor (
-    // private quizService: QuizService,
+    private quizService: QuizService,
+    private route: ActivatedRoute,
     private dialog: MatDialog,  
     // private coreService: CoreService,
-    // private router: Router                            
+    // private router: Router                          
   
   
 ) {}
 
-  questions = [
-    {
-      name: "Question 1",
-      answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac ante justo. Vestibulum tincidunt dolor vitae magna cursus, vel dignissim mauris tristique. 1"
-    },
-    {
-      name: "Question 2",
-      answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac ante justo. Vestibulum tincidunt dolor vitae magna cursus, vel dignissim mauris tristique."
-    },
-    {
-      name: "Question 3",
-      answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac ante justo. Vestibulum tincidunt dolor vitae magna cursus, vel dignissim mauris tristique."
-    },
-    {
-      name: "Question 4",
-      answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac ante justo. Vestibulum tincidunt dolor vitae magna cursus, vel dignissim mauris tristique."
-    },
-    {
-      name: "Question 5",
-      answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac ante justo. Vestibulum tincidunt dolor vitae magna cursus, vel dignissim mauris tristique."
-    }
-  ];
-  
 
-
-  answerVisible = [false, false, false];
-
-  swiper: Swiper | undefined;
+//  swiper!: Swiper;
 
   ngAfterViewInit() {
-    this.swiper = new Swiper('.swiper', {
+    // this.swiper = new Swiper('.swiper', {
      
-      direction: 'horizontal',
-      loop: true,
-
+    //   direction: 'horizontal',
+    //   loop: true,
+  
            
-      pagination: {
-        el: '.swiper-pagination',
-      },
+    //   pagination: {
+    //     el: '.swiper-pagination',
+    //   },
       
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
+    //   navigation: {
+    //     nextEl: '.swiper-button-next',
+    //     prevEl: '.swiper-button-prev',
+    //   },
+  
+    //   scrollbar: {
+    //     el: '.swiper-scrollbar',
+    //   },
+    // }); 
 
-      scrollbar: {
-        el: '.swiper-scrollbar',
-      },
-    });   
-   
+      
   } 
 
-  showAnswer(index: number) {
-    this.answerVisible[index] = !this.answerVisible[index];
+  showAnswer(question: any) {
+    question.answerVisible = !question.answerVisible;
   }
+  
+  
 
 
   openAddQuestionsForm() {
@@ -99,5 +81,39 @@ export class QuizComponent {
       }
     })
   }
+
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.quizId = +params['id']; // (+) converts string 'id' to a number
+      this.getQuizQuestions();
+    });
+
+   
+  }
+
+  getQuizQuestions() {
+    this.quizService.getQuizQuestions(this.quizId).subscribe((questions: any[]) => {
+      this.questions = questions;
+      console.log(questions)
+    });
+
+    
+  }
+
+
+  prevSlide() {
+    this.currentIndex--;
+    if (this.currentIndex < 0) {
+      this.currentIndex = this.questions.length - 1;
+    }
+  }
+
+  nextSlide() {
+    this.currentIndex++;
+    if (this.currentIndex >= this.questions.length) {
+      this.currentIndex = 0;
+    }
+  }
+    
 
 }
