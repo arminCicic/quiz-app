@@ -1,6 +1,8 @@
 {
-  "/quizzes/:quizId/questions": "/questions/:quizId",
-  "/quizzes/:quizId/questions/:questionId": "/questions/:questionId"
+  "/items/:quizId/items": "/items/:quizId",
+  "/items/:quizId/items/:questionId": "/items/:questionId",
+
+  "/items/questions": "/questions"
 }
 
 

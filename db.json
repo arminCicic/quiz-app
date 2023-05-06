@@ -1,42 +1,12 @@
 {
-  "quizzes": [
+  "items": [
     {
       "id": 1,
-      "quizName": "prvi kviz",
-      "questions": [
-        {
-          "id": 1,
-          "quizQuestion": "prvi kviz prvo pitanje",
-          "quizAnswer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac ante justo. Vestibulum tincidunt dolor vitae magna cursus, vel dignissim mauris tristique. 1",
-          "answerVisible": false
-        },
-        {
-          "id": 2,
-          "quizQuestion": "pitanje",
-          "quizAnswer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac ante justo. Vestibulum tincidunt dolor vitae magna cursus, vel dignissim mauris tristique. 1",
-          "answerVisible": false
-        }
-      
-      ]
+      "quizName": "prvi kviz"
     },
     {
       "id": 2,
-      "quizName": "drugi kviz",
-      "questions": [
-        {
-          "id": 1,
-          "quizQuestion": "drugi kviz prvo pitanje",
-          "quizAnswer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac ante justo. Vestibulum tincidunt dolor vitae magna cursus, vel dignissim mauris tristique. 1",
-          "answerVisible": false
-        },
-        {
-          "id": 2,
-          "quizQuestion": "pitanje",
-          "quizAnswer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac ante justo. Vestibulum tincidunt dolor vitae magna cursus, vel dignissim mauris tristique. 1",
-          "answerVisible": false
-        }
-       
-      ]
+      "quizName": "drugi kviz"
     },
     {
       "id": 3,
@@ -129,18 +99,87 @@
   "questions": [
     {
       "id": 1,
-      "quizQuestion": "prvi kviz prvo pitanje test",
       "quizId": 2,
-      "quizAnswer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac ante justo. Vestibulum tincidunt dolor vitae magna cursus, vel dignissim mauris tristique. 1",
+      "quizQuestion": "ff",
+      "quizAnswer": "ff",
       "answerVisible": false
     },
     {
       "id": 2,
-      "quizQuestion": "pitanje test",
+      "quizId": 2,
+      "quizQuestion": "fdf",
+      "quizAnswer": "fdfd",
+      "answerVisible": false
+    },
+    {
+      "id": 3,
+      "quizId": 2,
+      "quizQuestion": "fdfdf",
+      "quizAnswer": "fdfdf",
+      "answerVisible": false
+    },
+    {
+      "id": 4,
+      "quizId": 3,
+      "quizQuestion": "fdfd",
+      "quizAnswer": "fsdfdsfd",
+      "answerVisible": false
+    },
+    {
+      "id": 5,
+      "quizId": 2,
+      "quizQuestion": "novo pitanje u kvizu dva",
+      "quizAnswer": "kdaokdoakdoakdo",
+      "answerVisible": false
+    },
+    {
+      "id": 6,
+      "quizId": 2,
+      "quizQuestion": "jos jedno pitanje",
+      "quizAnswer": "kokokok",
+      "answerVisible": false
+    },
+    {
+      "id": 7,
+      "quizId": 2,
+      "quizQuestion": "ggggg",
+      "quizAnswer": "g",
+      "answerVisible": false
+    },
+    {
+      "id": 8,
+      "quizId": 2,
+      "quizQuestion": "eeeeeeeee",
+      "quizAnswer": "e",
+      "answerVisible": false
+    },
+    {
+      "id": 12,
       "quizId": 1,
-      "quizAnswer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac ante justo. Vestibulum tincidunt dolor vitae magna cursus, vel dignissim mauris tristique. 1",
+      "quizQuestion": "arbddddggggggggggggggggg",
+      "quizAnswer": "sassa",
+      "answerVisible": false
+    },
+    {
+      "id": 13,
+      "quizId": 1,
+      "quizQuestion": "dddddddddddddddddddd",
+      "quizAnswer": "dd",
+      "answerVisible": false
+    },
+    {
+      "id": 15,
+      "quizId": 3,
+      "quizQuestion": "aaaaaaaaa",
+      "quizAnswer": "aaaa",
+      "answerVisible": false
+    },
+    {
+      "id": 16,
+      "quizId": 1,
+      "quizQuestion": "jos jedna procjevaavva",
+      "quizAnswer": "dsadasd",
       "answerVisible": false
     }
-  
   ]
 }

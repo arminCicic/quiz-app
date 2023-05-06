@@ -5,6 +5,7 @@ import { QuizService } from 'src/app/services/quiz.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddQuestionsComponent } from '../add-questions/add-questions.component';
 import { ActivatedRoute } from '@angular/router';
+import { CoreService } from '../../core/core.service';
 
 
 
@@ -19,11 +20,14 @@ import { ActivatedRoute } from '@angular/router';
 export class QuizComponent implements OnInit, AfterViewInit {  
 
   
+
+  
   answerVisible: boolean[] = [];
   quizId!: number;
   questions: any[] = [];
 
   currentIndex = 0;
+
   
 
 
@@ -31,6 +35,7 @@ export class QuizComponent implements OnInit, AfterViewInit {
     private quizService: QuizService,
     private route: ActivatedRoute,
     private dialog: MatDialog,  
+    private coreService: CoreService,
                        
   
   
@@ -39,7 +44,7 @@ export class QuizComponent implements OnInit, AfterViewInit {
 
 //  swiper!: Swiper;
 
-  ngAfterViewInit() {
+  ngAfterViewInit() {   
     // this.swiper = new Swiper('.swiper', {
      
     //   direction: 'horizontal',
@@ -93,7 +98,16 @@ export class QuizComponent implements OnInit, AfterViewInit {
       this.getQuizQuestions();
     });
 
+    
+    this.quizService.questionAdded$.subscribe(() => {
+      this.reloadQuestions();
+    });
    
+
+  }
+
+  reloadQuestions() {
+    this.getQuizQuestions();
   }
 
   getQuizQuestions() {
@@ -101,9 +115,39 @@ export class QuizComponent implements OnInit, AfterViewInit {
       this.questions = questions;
      
     });
-
     
   }
+
+  deleteQuestion(id:number) { 
+    
+      this.quizService.deleteQuestion(id).subscribe({
+        next: (res) => {
+         this.coreService.openSnackBar("Employee deleted", "done")
+         this.reloadQuestions();
+         
+        },
+        error: (err) => {
+          console.log(err)
+        } 
+      })     
+     
+  }
+
+  openEditForm(data:any, id:any) {
+    const dialogRef = this.dialog.open(AddQuestionsComponent, {
+      id: id,
+      data: data,
+  
+    });
+    dialogRef.afterClosed().subscribe({
+      next: (val) => {
+        if (val) {
+          this.reloadQuestions();
+        }
+      }
+    })
+
+  } 
 
 
   prevSlide() {

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { QuizService } from 'src/app/services/quiz.service';
 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -12,13 +12,18 @@ import { CoreService } from '../../core/core.service';
   styleUrls: ['./add-questions.component.scss']
 })
 export class AddQuestionsComponent implements OnInit {
+  question = '';
+
 
   form: FormGroup;
 
-  newQuestion: any
+
   quizId: any;
 
   
+
+  // u form control dodajem quizId da bi znao koje pitanje u questions arreyu u bazi pripada kojem kvizu,
+  // kako bi ih mogao brisati i editovai. A id on sam generise.
  
 
   constructor (private quizService: QuizService,
@@ -29,7 +34,8 @@ export class AddQuestionsComponent implements OnInit {
 ) {
 this.form = this.fb.group (
 {
-id: new FormControl(this.data.quizId),
+id: new FormControl(''),
+quizId: new FormControl(this.quizId),
 quizQuestion: new FormControl('', [Validators.required]),
 quizAnswer: new FormControl('', [Validators.required]),
 answerVisible: false
@@ -41,39 +47,40 @@ this.quizId = this.data.quizId;
 ngOnInit(): void {
  this.form.patchValue(this.data)
  
+ 
 }
+
+
+
 
 onFormSubmit () {
 
-
-
-  // if (this.form.valid) {
-  //   if (this.data) {
+  if (this.form.valid) {
+    if (this.data) {
     
-  //     this.quizService.updateQuiz(this.form.value).subscribe({
+      this.quizService.updateQuestion(this.form.value).subscribe({
        
-  //       next: (val:any) => {
-  //         this.coreService.openSnackBar("Quiz information updated")
-  //         this.dialogRef.close(true);
+        next: (val:any) => {
+          this.coreService.openSnackBar("Quiz information updated")
+          this.dialogRef.close(true);
 
           
                   
-  //       }, 
-  //       error: (err:any) => {
-  //         console.error(err)
+        }, 
+        error: (err:any) => {
+          console.error(err)
         
-  //       }
+        }
 
-  //     })
-  //   } else {
-      // ovde treba pristupiti ID trenutnog quiz-a, koji ima u quiz komponenti
-      // navodno koristim pogresan ID. Trebam prvo getati quizzes list ovde pa modifikovati funkciju
-      this.quizService.addNewQuestion(this.quizId, this.form.value).subscribe({        
+      })
+    } else {
+    
+      this.quizService.addNewQuestion(this.form.value).subscribe({        
 
         next: (val:any) => {
           this.coreService.openSnackBar("Question added")
           this.dialogRef.close(true);
-          console.log(this.form.value)
+         
         }, 
         error: (err:any) => {
           console.error(err)
@@ -81,26 +88,14 @@ onFormSubmit () {
 
       })
 
-      
+    
+
+      this.quizService.addQuestion();
 
    
-
-      // this.quizService.getSingleQuestion(1,1).subscribe({
-      //   next: (val:any) => {
-      //     this.coreService.openSnackBar("Question fetched")
-      //     this.dialogRef.close(true);
-      //     console.log(val)
-        
-      //   }, 
-      //   error: (err:any) => {
-      //     console.error(err)
-      //   }
-
-      // })
-    
-  //   }
-  // }
 }
 
+}
+}
 }
 

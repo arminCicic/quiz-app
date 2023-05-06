@@ -1,35 +1,50 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, map, forkJoin, switchMap } from 'rxjs';
+import { EventEmitter, Injectable } from '@angular/core';
+import { Observable, map, forkJoin, switchMap, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService {
 
+  private questionAddedSource = new Subject<void>();
+  questionAdded$ = this.questionAddedSource.asObservable();
+
+  addQuestion() {
+    this.questionAddedSource.next();
+  }
+
   constructor(private _http:HttpClient) { }
 
   public addQuiz(data: any): Observable<any> {
-    return this._http.post("http://localhost:3000/quizzes", data)
+    return this._http.post("http://localhost:3000/items", data)
   }
 
  public updateQuiz(data: any): Observable<any> {
   const id = data.id; 
-   return this._http.put(`http://localhost:3000/quizzes/${id}`, data);    
+   return this._http.put(`http://localhost:3000/items/${id}`, data);    
   }
 
   public getQuizList(): Observable<any> {
-    return this._http.get('http://localhost:3000/quizzes');
+    return this._http.get('http://localhost:3000/items');
   }
 
 public  deleteQuiz(id: number): Observable<any> {
-    return this._http.delete(`http://localhost:3000/quizzes/${id}`)
+    return this._http.delete(`http://localhost:3000/items/${id}`)
   }
 
-  public addNewQuestion(quizId:number, data: any): Observable<any> {
-    console.log(quizId, data)
-    // const id = data.quizId;
-    return this._http.post(`http://localhost:3000/quizzes/${quizId}/questions`, data);
+  public addNewQuestion(data: any): Observable<any> {   
+    
+    return this._http.post(`http://localhost:3000/questions`, data);
+  }
+
+  public updateQuestion(data: any): Observable<any> {   
+    const id = data.id; 
+    return this._http.put(`http://localhost:3000/questions/${id}`, data);  
+  }
+
+  public  deleteQuestion(id: number): Observable<any> {
+    return this._http.delete(`http://localhost:3000/questions/${id}`)
   }
 
  
@@ -39,7 +54,7 @@ public  deleteQuiz(id: number): Observable<any> {
   
 
   public getSingleQuestion(id: number, questionId: number): Observable<any> {
-    return this._http.get(`http://localhost:3000/quizzes/${id}`).pipe(
+    return this._http.get(`http://localhost:3000/items/${id}`).pipe(
       map((quiz: any) => {
         const question = quiz.questions.find((q: any) => q.id === questionId);
         return {
@@ -50,13 +65,12 @@ public  deleteQuiz(id: number): Observable<any> {
     );
   }
 
-  public getQuizQuestions(id: number): Observable<any> {
-    return this._http.get(`http://localhost:3000/quizzes/${id}`).pipe(
-      map((quiz: any) => {
-        return quiz.questions;
+  public getQuizQuestions(quizId: number): Observable<any> {
+    return this._http.get(`http://localhost:3000/questions`).pipe(
+      map((questions: any) => {
+        return questions.filter((question: any) => question.quizId === quizId);
       })
     );
   }
-  
-  
+
 }

@@ -53,6 +53,16 @@
       <mat-card-actions>
           <button mat-button (click)="showAnswer(question)">{{!question.answerVisible ? 'SHOW ANSWER' : 'HIDE ANSWER'}}</button>
       </mat-card-actions>
+
+      <mat-card-actions>
+        <button mat-icon-button color="warn" (click)="deleteQuestion(question.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" (click)="openEditForm(question, question.id)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </mat-card-actions>
+
   </mat-card>
   </div>
 
