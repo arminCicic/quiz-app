@@ -4,6 +4,7 @@ SwiperCore.use([Autoplay, Pagination, Navigation]);
 import { QuizService } from 'src/app/services/quiz.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddQuestionsComponent } from '../add-questions/add-questions.component';
+import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { CoreService } from '../../core/core.service';
 
@@ -33,6 +34,7 @@ export class QuizComponent implements OnInit, AfterViewInit {
 
   constructor (
     private quizService: QuizService,
+    private router: Router,        
     private route: ActivatedRoute,
     private dialog: MatDialog,  
     private coreService: CoreService,
@@ -42,29 +44,9 @@ export class QuizComponent implements OnInit, AfterViewInit {
 ) {}
 
 
-//  swiper!: Swiper;
 
   ngAfterViewInit() {   
-    // this.swiper = new Swiper('.swiper', {
-     
-    //   direction: 'horizontal',
-    //   loop: true,
   
-           
-    //   pagination: {
-    //     el: '.swiper-pagination',
-    //   },
-      
-    //   navigation: {
-    //     nextEl: '.swiper-button-next',
-    //     prevEl: '.swiper-button-prev',
-    //   },
-  
-    //   scrollbar: {
-    //     el: '.swiper-scrollbar',
-    //   },
-    // }); 
-
       
   } 
 
@@ -78,7 +60,8 @@ export class QuizComponent implements OnInit, AfterViewInit {
   openAddQuestionsForm() {
     const dialogRef = this.dialog.open(AddQuestionsComponent, {
       data: {
-        quizId: this.quizId
+        quizId: this.quizId,
+        isEditing: false,
       }
     });
     dialogRef.afterClosed().subscribe({
@@ -133,10 +116,17 @@ export class QuizComponent implements OnInit, AfterViewInit {
      
   }
 
+  // iako sam iskomentarisao update/edit funkciju u add-questions ts, ipak otvara edit samo
+  //uvijek prepoznaje da ima data, ne otvara edit nego samo ostane naziv edit, ovako sad stanje radi add questions
+  // razdvoji logiku za edit i add questions i to je to
+  // stavi da postoji jos is editing opcija i stavi data && isEditing i onda nekad udje u edit tek
+
   openEditForm(data:any, id:any) {
+    
     const dialogRef = this.dialog.open(AddQuestionsComponent, {
       id: id,
-      data: data,
+      data: data,     
+      
   
     });
     dialogRef.afterClosed().subscribe({
@@ -148,6 +138,11 @@ export class QuizComponent implements OnInit, AfterViewInit {
     })
 
   } 
+
+  openQuestions(id:number) {
+    this.router.navigate(['/questions', id]);
+   
+  }
 
 
   prevSlide() {

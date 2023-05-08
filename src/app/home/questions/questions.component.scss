@@ -1,0 +1,29 @@
+h1 {
+  padding: 2%;
+  text-align: center;
+  font-size: 1.9rem;
+}
+
+.back {
+  font-size: 1.5em;
+  margin-left: 1%;
+}
+
+
+
+.cards-container {
+  padding: 1% 5%;
+  font-size: 1.2em;
+
+  .answer {
+    margin-top: 1rem;
+  }
+
+  .single-card {
+    button {
+      position: absolute;
+      right: 4%;
+    }
+  }
+  
+}

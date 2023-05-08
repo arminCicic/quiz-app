@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { Observable, map, forkJoin, switchMap, Subject } from 'rxjs';
+import { Observable, map, forkJoin, switchMap, Subject, mergeMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -29,14 +29,34 @@ export class QuizService {
     return this._http.get('http://localhost:3000/items');
   }
 
-public  deleteQuiz(id: number): Observable<any> {
-    return this._http.delete(`http://localhost:3000/items/${id}`)
+  public deleteQuiz(id: number): Observable<any> {
+   return this._http.delete(`http://localhost:3000/items/${id}`);   
   }
+  
 
-  public addNewQuestion(data: any): Observable<any> {   
-    
+  public addNewQuestion(data: any): Observable<any> {  
+    return this._http.post(`http://localhost:3000/questions`, data);     
+    // return this._http.post(`http://localhost:3000/questions`, data).pipe(
+    //   mergeMap((res: any) => {
+    //     // second POST request to add the question to all quizzes
+    //     return this._http.post(`http://localhost:3000/allQuestions`, data);
+    //   })
+    // );
+  }
+  
+
+  public addRecycledQuestion(question: object, id: number): Observable<any> {
+    const data = {
+      ...question, // Spread the original question object
+      id: "",
+      quizId: id // Update the quizId property with the passed id parameter
+    };
+
+    console.log(data)
+  
     return this._http.post(`http://localhost:3000/questions`, data);
   }
+  
 
   public updateQuestion(data: any): Observable<any> {   
     const id = data.id; 
@@ -46,10 +66,6 @@ public  deleteQuiz(id: number): Observable<any> {
   public  deleteQuestion(id: number): Observable<any> {
     return this._http.delete(`http://localhost:3000/questions/${id}`)
   }
-
- 
-  
-  
   
   
 
@@ -71,6 +87,11 @@ public  deleteQuiz(id: number): Observable<any> {
         return questions.filter((question: any) => question.quizId === quizId);
       })
     );
+  }
+
+
+  public getQuestionsList(): Observable<any> {
+    return this._http.get('http://localhost:3000/questions');
   }
 
 }

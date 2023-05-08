@@ -2,7 +2,8 @@
   "/items/:quizId/items": "/items/:quizId",
   "/items/:quizId/items/:questionId": "/items/:questionId",
 
-  "/items/questions": "/questions"
+  "/questions/:quizId": "/questions/:quizId"
+  
 }
 
 

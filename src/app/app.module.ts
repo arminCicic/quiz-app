@@ -28,6 +28,7 @@ import { QuizComponent } from './home/quiz/quiz.component';
 
 import { SwiperModule } from 'swiper/angular';
 import { AddQuestionsComponent } from './home/add-questions/add-questions.component';
+import { QuestionsComponent } from './home/questions/questions.component';
 
 
 
@@ -38,6 +39,7 @@ import { AddQuestionsComponent } from './home/add-questions/add-questions.compon
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'quiz/:id', component: QuizComponent },
+  { path: 'questions/:id', component: QuestionsComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }
 ]
@@ -50,6 +52,7 @@ const appRoutes: Routes = [
     AddQuizComponent,
     QuizComponent,
     AddQuestionsComponent,
+    QuestionsComponent,
    
   
    

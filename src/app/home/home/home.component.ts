@@ -72,7 +72,7 @@ export class HomeComponent {
   deleteQuiz(id:number) {
     this.quizService.deleteQuiz(id).subscribe({
       next: (res) => {
-       this.coreService.openSnackBar("Employee deleted", "done")
+       this.coreService.openSnackBar("Quiz deleted", "done")
         this.getQuizList();
       },
       error: (err) => {

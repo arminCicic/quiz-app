@@ -4,7 +4,14 @@
 
 .add-btn {
    display: flex;
+   gap: 5%;
    justify-content: center; 
+   align-items: center;
+
+   button {
+    max-width: 200px;
+   }
+
    }
 
 .title {
@@ -28,26 +35,6 @@
   
 }
 
-.swiper {
-  width: 85vw;
-  height: 78vh;
-}
-
-.swiper-slide {
-  text-align: center;
-  background: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.swiper-slide img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 
 .slideshow-container {
   margin: auto;
@@ -59,7 +46,7 @@
 .slide {
   display: none;
   position: absolute;
-  top: 0;
+  top: 23%;
   left: 0;
   width: 100%;
   height: 100%;
@@ -82,9 +69,25 @@
 }
 
 .prev {
-  left: 0;
+  left: -8%;
 }
 
 .next {
-  right: 0;
+  right: -8%;
+}
+
+@media (max-width: 760px) {
+
+  .mat-mdc-card-title {
+    font-size: 1.1rem;
+  }
+
+  .slide {
+    top: 30%;
+  }
+
+  .prev, .next {
+    font-size: 40px;
+  }
+
 }

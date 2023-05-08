@@ -35,9 +35,13 @@ questions: this.fb.array([])
 
 ngOnInit(): void {
  this.form.patchValue(this.data)
+ 
 }
 
 onFormSubmit () {
+
+
+
   if (this.form.valid) {
     if (this.data) {
     
@@ -55,6 +59,7 @@ onFormSubmit () {
 
       })
     } else {
+     
       this.quizService.addQuiz(this.form.value).subscribe({
         next: (val:any) => {
           this.coreService.openSnackBar("Quiz added")

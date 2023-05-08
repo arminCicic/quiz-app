@@ -14,11 +14,14 @@ import { CoreService } from '../../core/core.service';
 export class AddQuestionsComponent implements OnInit {
   question = '';
 
+  // Set isEditing to this.data.isEditing if it's not undefined, otherwise set it to true
+  isEditing: boolean = this.data?.isEditing ?? true;
+
 
   form: FormGroup;
 
 
-  quizId: any;
+  quizId: number;
 
   
 
@@ -35,18 +38,21 @@ export class AddQuestionsComponent implements OnInit {
 this.form = this.fb.group (
 {
 id: new FormControl(''),
-quizId: new FormControl(this.quizId),
+quizId: new FormControl(''),
 quizQuestion: new FormControl('', [Validators.required]),
 quizAnswer: new FormControl('', [Validators.required]),
-answerVisible: false
+answerVisible: false,
+
+
 }
 )
 this.quizId = this.data.quizId;
+// this.isEditing = this.data.isEditing;
 }
 
 ngOnInit(): void {
  this.form.patchValue(this.data)
- 
+
  
 }
 
@@ -55,13 +61,17 @@ ngOnInit(): void {
 
 onFormSubmit () {
 
+
+
   if (this.form.valid) {
-    if (this.data) {
+    if (this.data && this.isEditing) {
+      
     
       this.quizService.updateQuestion(this.form.value).subscribe({
+   
        
         next: (val:any) => {
-          this.coreService.openSnackBar("Quiz information updated")
+          this.coreService.openSnackBar("Question information updated")
           this.dialogRef.close(true);
 
           
@@ -74,7 +84,7 @@ onFormSubmit () {
 
       })
     } else {
-    
+         
       this.quizService.addNewQuestion(this.form.value).subscribe({        
 
         next: (val:any) => {
