@@ -1,7 +1,7 @@
 <div class="main-body">
 
     <mat-form-field>
-      <mat-label>Filter</mat-label>
+      <mat-label>Search Quiz</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Quiz 1" #input>
     </mat-form-field>
   
@@ -23,7 +23,7 @@
   
        
         <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="action-title"> Action </th>
           <td mat-cell *matCellDef="let row">
             <button mat-icon-button color="primary" class="action-btn" (click)="openQuiz(row.id)">
               <mat-icon class="mat-icon-lg">open_in_new</mat-icon>

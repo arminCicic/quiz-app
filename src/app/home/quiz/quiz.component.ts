@@ -1,6 +1,4 @@
-import { AfterViewInit, Component, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import SwiperCore, {Autoplay, Pagination, Navigation } from "swiper";
-SwiperCore.use([Autoplay, Pagination, Navigation]);
+import { Component, OnInit} from '@angular/core';
 import { QuizService } from 'src/app/services/quiz.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddQuestionsComponent } from '../add-questions/add-questions.component';
@@ -16,44 +14,28 @@ import { CoreService } from '../../core/core.service';
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-})
-export class QuizComponent implements OnInit, AfterViewInit {  
-
-  
+ })
+export class QuizComponent implements OnInit {   
 
   
   answerVisible: boolean[] = [];
   quizId!: number;
   questions: any[] = [];
-
-  currentIndex = 0;
-
-  
-
+  currentIndex = 0; 
 
   constructor (
     private quizService: QuizService,
     private router: Router,        
     private route: ActivatedRoute,
     private dialog: MatDialog,  
-    private coreService: CoreService,
-                       
+    private coreService: CoreService,                   
   
   
 ) {}
 
-
-
-  ngAfterViewInit() {   
-  
-      
-  } 
-
-  showAnswer(question: any) {
+  showAnswer (question: any) {
     question.answerVisible = !question.answerVisible;
-  }
-  
+  } 
   
 
 
@@ -76,33 +58,33 @@ export class QuizComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.quizId = +params['id']; // (+) converts string 'id' to a number
-      this.getQuizQuestions();
-    });
-
-    
+     // get the quiz ID from the URL and load the quiz questions
+     this.route.params.subscribe(params => {
+       this.quizId = +params['id']; // (+) converts string 'id' to a number
+       this.getQuizQuestions();
+      });
+      
+      // subscribe to an event that indicates a new question has been added to the quiz
     this.quizService.questionAdded$.subscribe(() => {
       this.reloadQuestions();
-    });
-   
+    });   
 
   }
+
 
   reloadQuestions() {
     this.getQuizQuestions();
   }
 
+
   getQuizQuestions() {
     this.quizService.getQuizQuestions(this.quizId).subscribe((questions: any[]) => {
-      this.questions = questions;
-     
-    });
-    
+      this.questions = questions;     
+    });    
   }
 
-  deleteQuestion(id:number) { 
-    
+
+  deleteQuestion(id:number) {     
       this.quizService.deleteQuestion(id).subscribe({
         next: (res) => {
          this.coreService.openSnackBar("Employee deleted", "done")
@@ -115,18 +97,12 @@ export class QuizComponent implements OnInit, AfterViewInit {
       })     
      
   }
+ 
 
-  // iako sam iskomentarisao update/edit funkciju u add-questions ts, ipak otvara edit samo
-  //uvijek prepoznaje da ima data, ne otvara edit nego samo ostane naziv edit, ovako sad stanje radi add questions
-  // razdvoji logiku za edit i add questions i to je to
-  // stavi da postoji jos is editing opcija i stavi data && isEditing i onda nekad udje u edit tek
-
-  openEditForm(data:any, id:any) {
-    
+  openEditForm(data:any, id:any) {    
     const dialogRef = this.dialog.open(AddQuestionsComponent, {
       id: id,
-      data: data,     
-      
+      data: data,          
   
     });
     dialogRef.afterClosed().subscribe({
@@ -136,14 +112,12 @@ export class QuizComponent implements OnInit, AfterViewInit {
         }
       }
     })
-
   } 
 
   openQuestions(id:number) {
     this.router.navigate(['/questions', id]);
    
   }
-
 
   prevSlide() {
     this.currentIndex--;

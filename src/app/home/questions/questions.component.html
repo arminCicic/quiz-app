@@ -1,27 +1,21 @@
 
-
   <h1>All Questions</h1>
 
- <button mat-button color="primary" class="back" (click)="goBack()">Back to Quiz</button>
+  <button mat-button color="primary" class="back" (click)="goBack()">Back to Quiz</button>
 
 
     
   <div *ngFor="let question of questions; let i = index" class="cards-container">
 
 
-    <mat-card class="single-card">
-
-  
+    <mat-card class="single-card"> 
 
       <mat-card-content><strong>{{question.quizQuestion}}</strong></mat-card-content>
-
       <mat-card-content class="answer">{{question.quizAnswer}}</mat-card-content>
-
-
+      
       <mat-card-actions>
           <button mat-button color="primary" (click)="addQuestion(question)">Add this question</button>
       </mat-card-actions>
-
 
     </mat-card>
 

@@ -1,15 +1,21 @@
-import { Component, Inject, ViewChild } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
-
+import { Component, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { QuizService } from 'src/app/services/quiz.service';
-import { AddQuizComponent } from '../add-quiz/add-quiz.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AddQuizComponent } from '../add-quiz/add-quiz.component';
+import { QuizService } from 'src/app/services/quiz.service';
 import { CoreService } from '../../core/core.service';
 
 
+export interface QuizQuestion {
+  id: number;
+  quizId: number;
+  quizQuestion: string;
+  quizAnswer: string;
+  answerVisible: boolean;
+}
 
 
 
@@ -27,9 +33,8 @@ export class HomeComponent {
     'quizName', 
     'action'
     ];
-
    
-
+ // Get view child elements for sorting and pagination
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
    
@@ -47,6 +52,8 @@ export class HomeComponent {
         
       }
 
+
+  // Apply filter to data source when filter is changed
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -56,6 +63,8 @@ export class HomeComponent {
     }
   }
 
+
+  // Get quiz list from quiz service
   getQuizList() {
     this.quizService.getQuizList().subscribe({
       next: (res) => {
@@ -64,11 +73,14 @@ export class HomeComponent {
         this.dataSource.paginator = this.paginator
       }, 
       error: (err) => {
-        console.log(err)
+        this.coreService.openSnackBar("Failed to load quiz list. Please try again later.", "error");
+        console.log(err);
       }
     })
   }
 
+
+   // Delete quiz with given ID
   deleteQuiz(id:number) {
     this.quizService.deleteQuiz(id).subscribe({
       next: (res) => {
@@ -76,14 +88,17 @@ export class HomeComponent {
         this.getQuizList();
       },
       error: (err) => {
+        this.coreService.openSnackBar("Failed to delete quiz. Please try again later.", "error");
         console.log(err)
       } 
     })
     
    }
   
-   openEditForm(data:any, id:any, event:Event) {
 
+     // Open dialog to edit quiz
+   openEditForm(data:QuizQuestion, id:string, event:Event) {
+      // Stop event propagation if event originated from a button in the action column
     const isActionColumnButton = (event.target as HTMLElement).closest('.action-btn') !== null;
   if (isActionColumnButton) {
     event.stopPropagation()    
@@ -93,6 +108,7 @@ export class HomeComponent {
       data: data,
   
     });
+     // Refresh quiz list if changes were made
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
@@ -102,10 +118,10 @@ export class HomeComponent {
     })
 
   }  
-
   
   }
 
+ // Open dialog to add quiz
   openAddQuizForm() {
     const dialogRef = this.dialog.open(AddQuizComponent);
     dialogRef.afterClosed().subscribe({
@@ -117,14 +133,9 @@ export class HomeComponent {
     })
   }
 
+// Navigate to quiz component with quiz id
   openQuiz(id: number) {
     this.router.navigate(['/quiz', id]);
   }
-  
-  
-  
-
-  
-
 
 }

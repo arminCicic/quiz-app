@@ -1,39 +1,48 @@
 
 <div class="title">Quiz {{quizId}}</div>
+
 <div class="slideshow-container">
-  <div *ngFor="let question of questions; let i = index" class="slide" [class.active]="i === currentIndex">
-    <mat-card class="single-card">
-      <mat-card-header>
-          <mat-card-title>{{question.quizQuestion}}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content *ngIf="question.answerVisible">{{question.quizAnswer}}</mat-card-content>
-      <mat-card-actions>
-          <button mat-button (click)="showAnswer(question)">{{!question.answerVisible ? 'SHOW ANSWER' : 'HIDE ANSWER'}}</button>
-      </mat-card-actions>
 
-      <mat-card-actions>
-        <button mat-icon-button color="warn" (click)="deleteQuestion(question.id)">
-          <mat-icon>delete</mat-icon>
-        </button>
-        <button mat-icon-button color="primary" (click)="openEditForm(question, question.id)">
-          <mat-icon>edit</mat-icon>
-        </button>
-      </mat-card-actions>
+    <div *ngFor="let question of questions; let i = index" class="slide" [class.active]="i === currentIndex">
 
-  </mat-card>
-  </div>
+      <mat-card class="single-card">
 
-  <a class="prev" (click)="prevSlide()">&#10094;</a>
-  <a class="next" (click)="nextSlide()">&#10095;</a>
+          <mat-card-header>
+              <mat-card-title>{{question.quizQuestion}}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content *ngIf="question.answerVisible">{{question.quizAnswer}}</mat-card-content>
+          <mat-card-actions>
+              <button mat-button (click)="showAnswer(question)">{{!question.answerVisible ? 'SHOW ANSWER' : 'HIDE ANSWER'}}</button>
+          </mat-card-actions>
+
+          <mat-card-actions>
+            <button mat-icon-button color="warn" (click)="deleteQuestion(question.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" (click)="openEditForm(question, question.id)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </mat-card-actions>
+
+    </mat-card>
+
+   </div>
+
+      <a class="prev" (click)="prevSlide()">&#10094;</a>
+      <a class="next" (click)="nextSlide()">&#10095;</a>
 </div>
 
+
 <div class="add-btn">
+
   <button mat-raised-button color="primary" (click)="openAddQuestionsForm()">
     ADD QUESTIONS
   </button>
+
   <button mat-raised-button color="primary" (click)="openQuestions(quizId)">
       RECYCLE QUESTION
   </button>
+  
 </div>
 
 

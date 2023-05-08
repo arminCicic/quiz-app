@@ -1,8 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { QuizService } from 'src/app/services/quiz.service';
-
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CoreService } from '../../core/core.service';
 
@@ -13,16 +11,14 @@ import { CoreService } from '../../core/core.service';
 })
 export class AddQuizComponent implements OnInit {
 
-  form: FormGroup;
-
-  
+  form: FormGroup; 
  
 
   constructor (private quizService: QuizService,
-    private fb: FormBuilder,
-    private dialogRef: MatDialogRef<AddQuizComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private coreService: CoreService
+                private fb: FormBuilder,
+                private dialogRef: MatDialogRef<AddQuizComponent>,
+                @Inject(MAT_DIALOG_DATA) public data: any,
+                private coreService: CoreService
 ) {
 this.form = this.fb.group (
 {
@@ -38,10 +34,8 @@ ngOnInit(): void {
  
 }
 
+
 onFormSubmit () {
-
-
-
   if (this.form.valid) {
     if (this.data) {
     
@@ -53,6 +47,7 @@ onFormSubmit () {
                   
         }, 
         error: (err:any) => {
+          this.coreService.openSnackBar("Failed to update quiz information. Please try again later.", "error");
           console.error(err)
         
         }
@@ -67,6 +62,7 @@ onFormSubmit () {
           console.log(this.form.value)
         }, 
         error: (err:any) => {
+          this.coreService.openSnackBar("Failed to add quiz. Please try again later.", "error");
           console.error(err)
         }
 
