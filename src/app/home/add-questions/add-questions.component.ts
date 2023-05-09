@@ -3,7 +3,16 @@ import { QuizService } from 'src/app/services/quiz.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CoreService } from '../../core/core.service';
-import { Subscription } from 'rxjs';
+
+
+export interface DialogData {
+  isEditing?: boolean;
+  quizId?: number;
+  id?: string;
+  quizQuestion?: string;
+  quizAnswer?: string;
+  answerVisible?: boolean;
+}
 
 @Component({
   selector: 'app-add-questions',
@@ -14,10 +23,9 @@ export class AddQuestionsComponent implements OnInit {
 
 // Set isEditing to this.data.isEditing if it's not undefined, otherwise set it to true
   isEditing: boolean = this.data?.isEditing ?? true;
-
   form: FormGroup;
   quizId: number;  
-  private subscription: Subscription = new Subscription();
+
 
 
 
@@ -47,10 +55,6 @@ ngOnInit(): void {
  this.form.patchValue(this.data) 
 }
 
-ngOnDestroy(): void {
-    // unsubscribe from any subscriptions to prevent memory leaks
-  this.subscription.unsubscribe();
-}
 
 
 onFormSubmit () {

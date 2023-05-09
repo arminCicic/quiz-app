@@ -8,6 +8,20 @@ import { CoreService } from 'src/app/core/core.service';
 import { Location } from '@angular/common';
 
 
+export interface Question {
+  id: number;
+  quizz: string;
+  quizQuestion: string;
+  quizAnswer: string;
+}
+
+export interface TableDataSource {
+  filter: string;
+  data: Question[];
+  paginator: MatPaginator;
+  sort: MatSort;
+}
+
 
 @Component({
   selector: 'app-questions',
@@ -21,8 +35,8 @@ export class QuestionsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   
-  dataSource!: MatTableDataSource<any>;
-  questions: any[] = [];
+  dataSource!: TableDataSource;
+  questions: Question[] = [];
    quizId!: number;
   displayedColumns: string[] = [
     'id', 
@@ -31,7 +45,7 @@ export class QuestionsComponent implements OnInit {
     'answer',
     'action'
     ];
-  subscription: any;
+ 
 
 
   constructor (   
@@ -51,7 +65,7 @@ export class QuestionsComponent implements OnInit {
      
     });
      // Fetching questions list
-    this.getQuestionsList()
+    this.getRecycledQuestionsList()
 
   }
 
@@ -65,14 +79,8 @@ export class QuestionsComponent implements OnInit {
     }
   }
 
-  ngOnDestroy(): void {
-    // unsubscribe from any subscriptions to prevent memory leaks
-  this.subscription.unsubscribe();
-}
-
-
-  getQuestionsList() {
-    this.quizService.getQuestionsList().subscribe({
+  getRecycledQuestionsList() {
+    this.quizService.getRecycledQuestionsList().subscribe({
       next: (res) => {
         this.questions = res;
         

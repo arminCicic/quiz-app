@@ -1,70 +1,7 @@
 {
-  "items": [
-    {
-      "id": 1,
-      "quizName": "Prvi kviz",
-      "questions": []
-    },
-    {
-      "id": 2,
-      "quizName": "Drugi kviz",
-      "questions": []
-    },
-    {
-      "id": 3,
-      "quizName": "Treci kviz",
-      "questions": []
-    }
-  ],
-  "questions": [
-    {
-      "id": 1,
-      "quizId": 1,
-      "quizQuestion": "What is the capital of France?",
-      "quizAnswer": "The capital of France is Paris, which is also known as the City of Love.",
-      "answerVisible": false
-    },
-    {
-      "id": 2,
-      "quizId": 1,
-      "quizQuestion": "What is the largest planet in our solar system?",
-      "quizAnswer": "The largest planet in our solar system is Jupiter. It is a gas giant and the fifth planet from the Sun. Jupiter is so massive that it is more than twice the mass of all the other planets in our solar system combined. ",
-      "answerVisible": false
-    },
-    {
-      "id": 3,
-      "quizId": 2,
-      "quizQuestion": "Who was the first person to step on the moon?",
-      "quizAnswer": "The first person to step on the moon was Neil Armstrong, an American astronaut, on July 20, 1969",
-      "answerVisible": false
-    },
-    {
-      "id": 4,
-      "quizId": 2,
-      "quizQuestion": "What is the highest mountain in the world?",
-      "quizAnswer": "The highest mountain in the world is Mount Everest, which is located in the Himalayas and stands at 29,029 feet tal. ",
-      "answerVisible": false
-    },
-    {
-      "id": 5,
-      "quizId": 3,
-      "quizQuestion": "What is the largest planet in our solar system?",
-      "quizAnswer": "The largest planet in our solar system is Jupiter. It is a gas giant and the fifth planet from the Sun. Jupiter is so massive that it is more than twice the mass of all the other planets in our solar system combined. ",
-      "answerVisible": false
-    },
-    {
-      "id": 6,
-      "quizId": 2,
-      "quizQuestion": "What is the capital of France?",
-      "quizAnswer": "The capital of France is Paris, which is also known as the City of Love.",
-      "answerVisible": true
-    },
-    {
-      "id": 7,
-      "quizId": 2,
-      "quizQuestion": "What is the capital of France?",
-      "quizAnswer": "The capital of France is Paris, which is also known as the City of Love.",
-      "answerVisible": false
-    }
+  "items": [],
+  "questions": [],
+  "allQuestions": [
+    
   ]
 }

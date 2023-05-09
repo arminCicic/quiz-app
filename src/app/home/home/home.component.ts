@@ -17,6 +17,11 @@ export interface QuizQuestion {
   answerVisible: boolean;
 }
 
+export interface Quiz {
+  id: number;
+  quizName: string;
+}
+
 
 
 @Component({
@@ -26,7 +31,7 @@ export interface QuizQuestion {
 })
 export class HomeComponent {
 
-  dataSource!: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<Quiz>;
 
   displayedColumns: string[] = [
     'id', 
@@ -83,6 +88,17 @@ export class HomeComponent {
    // Delete quiz with given ID
   deleteQuiz(id:number) {
     this.quizService.deleteQuiz(id).subscribe({
+      next: (res) => {
+       this.coreService.openSnackBar("Quiz deleted", "done")
+        this.getQuizList();
+      },
+      error: (err) => {
+        this.coreService.openSnackBar("Failed to delete quiz. Please try again later.", "error");
+        console.log(err)
+      } 
+    })
+
+    this.quizService.deleteQuizQuestions(id).subscribe({
       next: (res) => {
        this.coreService.openSnackBar("Quiz deleted", "done")
         this.getQuizList();

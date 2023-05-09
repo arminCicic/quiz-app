@@ -24,7 +24,7 @@ this.form = this.fb.group (
 {
 id: new FormControl(''),
 quizName: new FormControl('', [Validators.required]),
-questions: this.fb.array([])
+
 }
 )
 }
@@ -59,7 +59,7 @@ onFormSubmit () {
         next: (val:any) => {
           this.coreService.openSnackBar("Quiz added")
           this.dialogRef.close(true);
-          console.log(this.form.value)
+         
         }, 
         error: (err:any) => {
           this.coreService.openSnackBar("Failed to add quiz. Please try again later.", "error");
