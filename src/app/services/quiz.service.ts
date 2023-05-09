@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable, map, Subject, switchMap, forkJoin } from 'rxjs';
+import { Question } from 'src/interfaces/question-interface';
+import { Quiz } from 'src/interfaces/quiz-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,6 @@ export class QuizService {
 
   private questionAddedSource = new Subject<void>();
   questionAdded$ = this.questionAddedSource.asObservable();
-  private questions: any[] = [];
 
   constructor(private _http:HttpClient,private apiService: ApiService) { }
 
@@ -22,11 +23,11 @@ export class QuizService {
     this.questionAddedSource.next();
   }
 
-  public addQuiz(data: any): Observable<any> {
+  public addQuiz(data: Quiz): Observable<any> {
     return this._http.post(`${this.apiService.baseUrl}/items`, data)
   }
 
- public updateQuiz(data: any): Observable<any> {
+ public updateQuiz(data: Quiz): Observable<any> {
   const id = data.id; 
    return this._http.put(`${this.apiService.baseUrl}/items/${id}`, data);    
   }
@@ -59,7 +60,7 @@ export class QuizService {
   }
   
 
-  public addNewQuestion(data: any): Observable<any> {
+  public addNewQuestion(data: Question): Observable<any> {
     // Make a POST request to /questions
     return this._http.post(`${this.apiService.baseUrl}/questions`, data).pipe(
       // After the POST request is successful, make a POST request to /allQuestions
@@ -80,7 +81,7 @@ export class QuizService {
   }
   
 
-  public updateQuestion(data: any): Observable<any> {   
+  public updateQuestion(data: Question): Observable<any> {   
     const id = data.id; 
     return this._http.put(`${this.apiService.baseUrl}/questions/${id}`, data);  
   }

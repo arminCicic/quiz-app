@@ -7,20 +7,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddQuizComponent } from '../add-quiz/add-quiz.component';
 import { QuizService } from 'src/app/services/quiz.service';
 import { CoreService } from '../../core/core.service';
+import { Question } from 'src/interfaces/question-interface';
+import { Quiz } from 'src/interfaces/quiz-interface';
 
 
-export interface QuizQuestion {
-  id: number;
-  quizId: number;
-  quizQuestion: string;
-  quizAnswer: string;
-  answerVisible: boolean;
-}
 
-export interface Quiz {
-  id: number;
-  quizName: string;
-}
+
 
 
 
@@ -113,7 +105,7 @@ export class HomeComponent {
   
 
      // Open dialog to edit quiz
-   openEditForm(data:QuizQuestion, id:string, event:Event) {
+   openEditForm(data:Question, id:string, event:Event) {
       // Stop event propagation if event originated from a button in the action column
     const isActionColumnButton = (event.target as HTMLElement).closest('.action-btn') !== null;
   if (isActionColumnButton) {

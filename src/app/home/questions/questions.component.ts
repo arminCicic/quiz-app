@@ -6,14 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { QuizService } from 'src/app/services/quiz.service';
 import { CoreService } from 'src/app/core/core.service';
 import { Location } from '@angular/common';
-
-
-export interface Question {
-  id: number;
-  quizz: string;
-  quizQuestion: string;
-  quizAnswer: string;
-}
+import { Question } from 'src/interfaces/question-interface';
 
 export interface TableDataSource {
   filter: string;
@@ -95,7 +88,7 @@ export class QuestionsComponent implements OnInit {
   }
 
   // add new question to quiz
-  addQuestion(question: object) {
+  addQuestion(question: Question) {
     this.quizService.addRecycledQuestion(question, this.quizId).subscribe({        
 
       next: (val:any) => {
