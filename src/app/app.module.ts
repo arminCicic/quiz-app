@@ -29,6 +29,9 @@ import { QuizComponent } from './home/quiz/quiz.component';
 import { SwiperModule } from 'swiper/angular';
 import { AddQuestionsComponent } from './home/add-questions/add-questions.component';
 import { QuestionsComponent } from './home/questions/questions.component';
+import { AuthComponent } from './auth/auth/auth.component';
+import { FormsModule }   from '@angular/forms';
+import { LoadingSpinnerComponent } from './shared/navbar/loading-spinner/loading-spinner';
 
 
 
@@ -38,10 +41,11 @@ import { QuestionsComponent } from './home/questions/questions.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
+  { path: 'auth', component: AuthComponent },
   { path: 'quiz/:id', component: QuizComponent },
   { path: 'questions/:id', component: QuestionsComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: '**', redirectTo: 'home' }
+  { path: '', redirectTo: '/auth', pathMatch: 'full' },
+  { path: '**', redirectTo: 'auth' }
 ]
 
 @NgModule({
@@ -53,6 +57,9 @@ const appRoutes: Routes = [
     QuizComponent,
     AddQuestionsComponent,
     QuestionsComponent,
+    AuthComponent,
+    LoadingSpinnerComponent
+    
    
   
    
@@ -82,6 +89,7 @@ const appRoutes: Routes = [
     MatSnackBarModule,
     MatCardModule,
     SwiperModule,
+    FormsModule
     
   ],
   providers: [],

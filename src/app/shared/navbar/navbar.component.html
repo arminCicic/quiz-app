@@ -1,3 +1,5 @@
-<mat-toolbar color="primary">
-    <span routerLink="/home">Quiz Maker</span>
+<mat-toolbar color="primary" >
+    <span class="left" routerLink="/home" *ngIf="isAuthenticated">Quiz Maker</span>
+    <span class="right" routerLink="/auth" *ngIf="!isAuthenticated">Authentificate</span>
+    <span class="right" *ngIf="isAuthenticated" (click)="onLogout()">Logout</span>
 </mat-toolbar>
