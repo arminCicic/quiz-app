@@ -32,6 +32,7 @@ import { QuestionsComponent } from './home/questions/questions.component';
 import { AuthComponent } from './auth/auth/auth.component';
 import { FormsModule }   from '@angular/forms';
 import { LoadingSpinnerComponent } from './shared/navbar/loading-spinner/loading-spinner';
+import { AuthGuard } from './auth/auth/auth.gard';
 
 
 
@@ -40,12 +41,12 @@ import { LoadingSpinnerComponent } from './shared/navbar/loading-spinner/loading
 
 
 const appRoutes: Routes = [
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'auth', component: AuthComponent },
-  { path: 'quiz/:id', component: QuizComponent },
-  { path: 'questions/:id', component: QuestionsComponent },
-  { path: '', redirectTo: '/auth', pathMatch: 'full' },
-  { path: '**', redirectTo: 'auth' }
+  { path: 'quiz/:id', component: QuizComponent, canActivate: [AuthGuard] },
+  { path: 'questions/:id', component: QuestionsComponent, canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/auth', pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: '**', redirectTo: 'auth', canActivate: [AuthGuard] }
 ]
 
 @NgModule({

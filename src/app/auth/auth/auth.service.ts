@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject, catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Subject, catchError, tap, throwError } from 'rxjs';
 import { User } from './user.model';
 import { Router } from '@angular/router';
 
@@ -20,7 +20,8 @@ export interface AuthResponseData {
 })
 export class AuthService {
 
-  user = new Subject<User>()
+  user = new BehaviorSubject<User>(null)
+  private tokenExpirationTimer: any;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -62,13 +63,60 @@ export class AuthService {
     }))
   }
 
+
+  
+  autoLogin() {
+    const userData: {
+      email: string;
+      id: string;
+      _token:string;
+      _tokenExpirationDate: string;
+    } = JSON.parse(localStorage.getItem('userData'));
+    if(!userData) {
+      return;
+    }
+
+    const loadedUser = new User(
+      userData.email, 
+      userData.id, 
+      userData._token,
+      new Date(userData._tokenExpirationDate));
+
+      // Because we are now again working with user model that has a getter value for
+      // token, getter returns true if the token is valid (which is being checked in the getter)
+
+      if (loadedUser.token) {
+        // emit this loaded user as currentky active user
+        this.user.next(loadedUser);
+        const expirationDuration = 
+        new Date(userData._tokenExpirationDate).getTime() -
+        new Date().getTime();
+
+        this.autoLogout(expirationDuration);
+      }
+
+  }
+  // autologin is then triggerd in app component ts
+
   logout() {
     this.user.next(null);
     this.router.navigate(['/auth']);
+    localStorage.removeItem('userData');  
 
+    // Check if there is already active timer
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer)
+    }
+    this.tokenExpirationTimer = null;
   }
 
-  private handleAuthentification(email:string, userId:string, token:string, expiresIn:number) {
+  autoLogout(expirationDuration: number) {
+   this.tokenExpirationTimer = setTimeout(()=> {
+      this.logout()
+    }, expirationDuration)
+  }
+
+  private handleAuthentification (email:string, userId:string, token:string, expiresIn:number) {
     const expirationDate = new Date (new Date().getTime() + expiresIn * 1000);
     const user = new User(
       email, 
@@ -78,6 +126,12 @@ export class AuthService {
       );
       // Set or emit this as currently logged in user
       this.user.next(user);
+
+      // whenever new user logs fire autoLogut with the value expiresIn (time in which token expires) 
+      // expiresIn is in seconds and autoLogout expects miliseconds, hence the *1000
+      this.autoLogout(expiresIn * 1000)
+
+      localStorage.setItem('userData', JSON.stringify(user));
   }
 
 
